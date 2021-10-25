@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   def index
-    @tweets = Tweet.all
+    @tweets = Tweet.all.order(created_at: :desc)
   end
 
   def new
@@ -13,6 +13,7 @@ class TweetsController < ApplicationController
     @tweet = Tweet.new(message: params[:tweet][:message], user_id: user.id)
     if @tweet.save
       #TODO: ツイートが成功したことをユーザに知らせる
+      flash[:notice] = 'ツイートをつぶやきました'
       redirect_to root_path
     else
       render 'new'
@@ -22,6 +23,7 @@ class TweetsController < ApplicationController
   def destroy
     tweet = Tweet.find(params[:id])
     tweet.destroy
+    flash[:notice] = 'ツイートを削除しました'
     redirect_to root_path
   end
 end

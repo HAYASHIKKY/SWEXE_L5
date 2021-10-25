@@ -1,7 +1,21 @@
+<% if @user.errors.present? %>
+エラーがあります。
+<ul>
+<% @user.errors.full_messages.each do |msg| %>
+<li><%= msg %></li>
+<% end %>
+</ul>
+<% end %>
+
 <%= form_for @user, url: {action: :create} do |f| %>
   <%= f.label :uid, 'uid' %> 
   <%= f.text_field :uid %> 
   <%= f.label :pass, 'pass' %> 
   <%= f.password_field :pass %> 
   <%= f.submit '登録' %>
+<% end %>
+
+
+<% flash.each do |key,value| %>
+  <p><%= value %><p>
 <% end %>
